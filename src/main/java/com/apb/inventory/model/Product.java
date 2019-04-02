@@ -1,19 +1,18 @@
 package com.apb.inventory.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.io.Serializable;
 import java.math.BigInteger;
 
 @Entity
 @XmlRootElement
 @Table(name="Product", schema="sa")
-public class Product {
+public class Product implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -21,18 +20,22 @@ public class Product {
     private String productName;
     private String productDesc;
     private String partNumber;
-    private String productLabel;
-    private BigInteger startingInventory;
-    private BigInteger inventoryReceived;
-    private BigInteger inventorySold;
-    private BigInteger inventoryOnHand;
-    private BigInteger minimumRequired;
+    private Long categoryId;
+    private Long startingInventory;
+    private Long inventoryReceived;
+    private Long inventorySold;
+    private Long inventoryOnHand;
+    private Long minimumRequired;
+    private Category category;
+    private String deletedFlag;
 
     @Id
     @Column(name="id")
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     public Long getId() {
         return id;
     }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -64,59 +67,80 @@ public class Product {
         this.partNumber = partNumber;
     }
 
-    @Column(name="productlabel")
-    public String getProductLabel() {
-        return productLabel;
+    @Column(name="categoryid")
+    public Long getCategoryId() {
+        return categoryId;
     }
 
-    public void setProductLabel(String productLabel) {
-        this.productLabel = productLabel;
+    public void setCategoryId(Long categoryId) {
+        this.categoryId = categoryId;
     }
 
     @Column(name="startinginventory")
-    public BigInteger getStartingInventory() {
+    public Long getStartingInventory() {
         return startingInventory;
     }
 
-    public void setStartingInventory(BigInteger startingInventory) {
+    public void setStartingInventory(Long startingInventory) {
         this.startingInventory = startingInventory;
     }
 
     @Column(name="inventoryreceived")
-    public BigInteger getInventoryReceived() {
+    public Long getInventoryReceived() {
         return inventoryReceived;
     }
 
-    public void setInventoryReceived(BigInteger inventoryReceived) {
+    public void setInventoryReceived(Long inventoryReceived) {
         this.inventoryReceived = inventoryReceived;
     }
 
     @Column(name="inventorysold")
-    public BigInteger getInventorySold() {
+    public Long getInventorySold() {
         return inventorySold;
     }
 
-    public void setInventorySold(BigInteger inventorySold) {
+    public void setInventorySold(Long inventorySold) {
         this.inventorySold = inventorySold;
     }
 
     @Column(name="inventoryonhand")
-    public BigInteger getInventoryOnHand() {
+    public Long getInventoryOnHand() {
         return inventoryOnHand;
     }
 
-    public void setInventoryOnHand(BigInteger inventoryOnHand) {
+    public void setInventoryOnHand(Long inventoryOnHand) {
         this.inventoryOnHand = inventoryOnHand;
     }
 
     @Column(name="minimumrequired")
-    public BigInteger getMinimumRequired() {
+    public Long getMinimumRequired() {
         return minimumRequired;
     }
 
-    public void setMinimumRequired(BigInteger minimumRequired) {
+    public void setMinimumRequired(Long minimumRequired) {
         this.minimumRequired = minimumRequired;
     }
+
+    @Column(name="deletedflag")
+    public String getDeletedFlag() {
+        return deletedFlag;
+    }
+
+    public void setDeletedFlag(String deletedFlag) {
+        this.deletedFlag = deletedFlag;
+    }
+
+    @ManyToOne
+    @JoinColumn(name="categoryid", referencedColumnName = "id",insertable = false, updatable = false)
+    @JsonIgnore
+    public Category getCategory() { return this.category; }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    @Transient
+    public String getProductLabel() { return  (category != null) ? this.category.getCategoryName() : null; }
 
     @Override
     public boolean equals(Object o) {

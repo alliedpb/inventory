@@ -1,5 +1,5 @@
-INSERT INTO sa.PRODUCT(ProductName, ProductDesc, PartNumber, ProductLabel, StartingInventory, InventoryReceived, inventorySold, inventoryOnHand, minimumRequired)
-VALUES ('Nail Blah Blah', 'Sample Product Record', '345-3456', 'SMALL', 100, 50,30,20,54);
+INSERT INTO sa.Category(CategoryName) VALUES ('UNCATEGORIZED')
 
-INSERT INTO sa.PRODUCT(ProductName, ProductDesc, PartNumber, ProductLabel, StartingInventory, InventoryReceived, inventorySold, inventoryOnHand, minimumRequired)
-VALUES ('Martilyo Blah Blah', 'Sample Product Record', '3FG45-F3456', 'SMALL', 100, 50,30,20,687);
+INSERT INTO sa.PRODUCT(ProductName, ProductDesc, PartNumber, CategoryId, StartingInventory, InventoryReceived, inventorySold, inventoryOnHand, minimumRequired, deletedFlag)
+VALUES ('NAILS', 'SILVER NAILES', 'NAIL-05412', 1, 100, 50,30,20,54, 'N');
+

@@ -13,6 +13,8 @@ spring:
         hibernate.dialect: org.hibernate.dialect.DerbyDialect
       naming-strategy: org.hibernate.cfg.DefaultNamingStrategy
 
+
+
           #implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
           #phsyical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
 server:
