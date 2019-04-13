@@ -2,6 +2,7 @@ package com.apb.inventory.controller;
 
 import com.apb.inventory.model.Category;
 import com.apb.inventory.repository.CategoryRepository;
+import com.apb.inventory.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,36 +15,30 @@ import java.util.List;
 @RestController
 public class CategoryController {
 
+    @Autowired
+    private CategoryService categoryService;
 
     @Autowired
     private CategoryRepository categoryRepository;
 
     @RequestMapping("/category/all")
-    public List<Category> getAllCategory() {
-        return categoryRepository.findAll();
+    public List<Category> getAllCategories() {
+        return categoryService.getAllCategories();
     }
 
     @RequestMapping("category/add/{categoryName}")
     public Long addCategory(@PathVariable String categoryName) {
-
-        Category category = new Category();
-        category.setCategoryName(categoryName);
-
-        categoryRepository.save(category);
-
-        return category.getId();
-
+        return categoryService.addCategory(categoryName);
     }
 
     @RequestMapping("category/edit/{id}/{categoryName}")
-    public Long editCategory(@PathVariable final Long id,@PathVariable  final String categoryName) {
+    public Long editCategory(@PathVariable final Long id,@PathVariable final String categoryName) {
+        return categoryService.editCategory(id, categoryName);
+    }
 
-        Category category = categoryRepository.findById(id).get();
-        category.setCategoryName(categoryName);
-        categoryRepository.save(category);
-
-        return category.getId();
-
+    @RequestMapping("/category/{categoryId}")
+    public Category getCategory(@PathVariable final Long categoryId) {
+        return categoryRepository.findById(categoryId).get();
     }
 
 }

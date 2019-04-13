@@ -8,26 +8,33 @@ import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @XmlRootElement
-@Table(name="Product", schema="sa")
+@Table(name="product_tbl", schema="sa")
 public class Product implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     private Long id;
+    private String productNumber;
     private String productName;
     private String productDesc;
-    private String partNumber;
     private Long categoryId;
+    private Long minInventory;
+    private Long maxInventory;
     private Long startingInventory;
     private Long inventoryReceived;
     private Long inventorySold;
     private Long inventoryOnHand;
-    private Long minimumRequired;
+
     private Category category;
     private String deletedFlag;
+    private LocalDateTime createdDate;
+    private LocalDateTime modifiedDate;
+    private String modifiedBy;
 
     @Id
     @Column(name="id")
@@ -40,16 +47,16 @@ public class Product implements Serializable {
         this.id = id;
     }
 
-    @Column(name="productname")
-    public String getProductName() {
-        return productName;
+    @Column(name="product_number")
+    public String getProductNumber() {
+        return productNumber;
     }
 
-    public void setProductName(String productName) {
-        this.productName = productName;
+    public void setProductNumber(String productNumber) {
+        this.productNumber = productNumber;
     }
 
-    @Column(name="productdesc")
+    @Column(name="product_desc")
     public String getProductDesc() {
         return productDesc;
     }
@@ -58,16 +65,17 @@ public class Product implements Serializable {
         this.productDesc = productDesc;
     }
 
-    @Column(name="partnumber")
-    public String getPartNumber() {
-        return partNumber;
+    @Column(name="product_name")
+    public String getProductName() {
+        return productName;
     }
 
-    public void setPartNumber(String partNumber) {
-        this.partNumber = partNumber;
+    public void setProductName(String productName) {
+        this.productName = productName;
     }
 
-    @Column(name="categoryid")
+
+    @Column(name="category_id")
     public Long getCategoryId() {
         return categoryId;
     }
@@ -76,7 +84,25 @@ public class Product implements Serializable {
         this.categoryId = categoryId;
     }
 
-    @Column(name="startinginventory")
+    @Column(name="min_inv")
+    public Long getMinInventory() {
+        return minInventory;
+    }
+
+    public void setMinInventory(Long minInventory) {
+        this.minInventory = minInventory;
+    }
+
+    @Column(name="max_inv")
+    public Long getMaxInventory() {
+        return maxInventory;
+    }
+
+    public void setMaxInventory(Long minimumRequired) {
+        this.maxInventory = maxInventory;
+    }
+
+    @Column(name="start_inv")
     public Long getStartingInventory() {
         return startingInventory;
     }
@@ -85,7 +111,8 @@ public class Product implements Serializable {
         this.startingInventory = startingInventory;
     }
 
-    @Column(name="inventoryreceived")
+
+    @Column(name="received_inv")
     public Long getInventoryReceived() {
         return inventoryReceived;
     }
@@ -94,7 +121,7 @@ public class Product implements Serializable {
         this.inventoryReceived = inventoryReceived;
     }
 
-    @Column(name="inventorysold")
+    @Column(name="sold_inv")
     public Long getInventorySold() {
         return inventorySold;
     }
@@ -103,7 +130,8 @@ public class Product implements Serializable {
         this.inventorySold = inventorySold;
     }
 
-    @Column(name="inventoryonhand")
+
+    @Column(name="onhand_inv")
     public Long getInventoryOnHand() {
         return inventoryOnHand;
     }
@@ -112,16 +140,8 @@ public class Product implements Serializable {
         this.inventoryOnHand = inventoryOnHand;
     }
 
-    @Column(name="minimumrequired")
-    public Long getMinimumRequired() {
-        return minimumRequired;
-    }
 
-    public void setMinimumRequired(Long minimumRequired) {
-        this.minimumRequired = minimumRequired;
-    }
-
-    @Column(name="deletedflag")
+    @Column(name="deleted_flag")
     public String getDeletedFlag() {
         return deletedFlag;
     }
@@ -130,8 +150,35 @@ public class Product implements Serializable {
         this.deletedFlag = deletedFlag;
     }
 
+    @Column(name="created_datetime")
+    public LocalDateTime getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(LocalDateTime createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    @Column(name="modified_datetime")
+    public LocalDateTime getModifiedDate() {
+        return modifiedDate;
+    }
+
+    public void setModifiedDate(LocalDateTime modifiedDate) {
+        this.modifiedDate = modifiedDate;
+    }
+
+    @Column(name="modified_by")
+    public String getModifiedBy() {
+        return modifiedBy;
+    }
+
+    public void setModifiedBy(String modifiedBy) {
+        this.modifiedBy = modifiedBy;
+    }
+
     @ManyToOne
-    @JoinColumn(name="categoryid", referencedColumnName = "id",insertable = false, updatable = false)
+    @JoinColumn(name="category_id", referencedColumnName = "id",insertable = false, updatable = false)
     @JsonIgnore
     public Category getCategory() { return this.category; }
 
@@ -151,7 +198,7 @@ public class Product implements Serializable {
         Product product = (Product) o;
 
         return new EqualsBuilder()
-                .append(partNumber, product.partNumber)
+                .append(productNumber, product.productNumber)
                 .isEquals();
     }
 

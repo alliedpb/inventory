@@ -4,6 +4,7 @@
 # Show or not log for each sql query
 spring:
   datasource:
+    continue-on-error: true
     url: jdbc:derby:db_inventory
   jpa:
     show-sql: true
@@ -13,12 +14,22 @@ spring:
         hibernate.dialect: org.hibernate.dialect.DerbyDialect
       naming-strategy: org.hibernate.cfg.DefaultNamingStrategy
 
+security:
+  basic:
+    enabled: false
+management:
+  security:
+    enabled: false
 
+derby:
+  language:
+    sequence:
+      preallocator: 1
 
           #implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
           #phsyical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
 server:
-  port: 6969
+  port: 5000
 
 # Hibernate ddl auto (create, create-drop, update): with "create-drop" the database
 # schema will be automatically created afresh for every start of application
