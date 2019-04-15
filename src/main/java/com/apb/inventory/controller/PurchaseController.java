@@ -38,12 +38,12 @@ public class PurchaseController {
         return purchaseService.addPurchase(purchaseDate,productId, supplierId, purchaseQty);
     }
 
-    @RequestMapping("/purchase/edit/{id}/{purchaseDate}/{productId}/{supplierId}/{purchaseQty}")
-    public Long editPurchase(@PathVariable Long id, @PathVariable @DateTimeFormat(pattern="yyyyMMdd") LocalDate purchaseDate, @PathVariable Long productId, @PathVariable Long supplierId, @PathVariable Long purchaseQty ) {
-        return purchaseService.editPurchase(id, purchaseDate,productId, supplierId, purchaseQty);
+    @RequestMapping("/purchase/edit/{id}/{purchaseDate}/{supplierId}/{purchaseQty}")
+    public Long editPurchase(@PathVariable Long id, @PathVariable @DateTimeFormat(pattern="yyyyMMdd") LocalDate purchaseDate, @PathVariable Long supplierId, @PathVariable Long purchaseQty ) {
+        return purchaseService.editPurchase(id, purchaseDate, supplierId, purchaseQty);
     }
 
-    @RequestMapping("/purchase/delete/{id}/")
+    @RequestMapping("/purchase/delete/{id}")
     public void deletePurchase(@PathVariable Long id) {
         purchaseService.deletePurchase(id);
     }

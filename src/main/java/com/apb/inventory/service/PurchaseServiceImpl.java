@@ -37,12 +37,14 @@ public class PurchaseServiceImpl implements PurchaseService {
         Product product = productRepository.findById(productId).get();
         Supplier supplier = supplierRepository.findById(supplierId).get();
 
-
         Long currentInventory = product.getInventoryReceived() == null ? 0 : product.getInventoryReceived();
         product.setInventoryReceived(currentInventory + purchaseQty);
+        product.setInventoryOnHand( product.getInventoryOnHand() + purchaseQty );
+
+        productRepository.save(product);
+
 
         Purchase purchase = new Purchase();
-
         purchase.setPurchaseQuantity(purchaseQty);
         purchase.setPurchaseDate(purchaseDate);
         purchase.setSupplierId(supplier.getId());
@@ -57,13 +59,21 @@ public class PurchaseServiceImpl implements PurchaseService {
     }
 
     @Override
-    public Long editPurchase(final Long id, final LocalDate purchaseDate, final Long productId, final Long supplierId, final Long purchaseQty) {
+    @Transactional
+    public Long editPurchase(final Long id, final LocalDate purchaseDate, final Long supplierId, final Long purchaseQty) {
 
         Purchase purchase = purchaseRepository.findById(id).get();
-        purchase.setPurchaseDate(purchaseDate);
-        purchase.setProductId(productId);
+        Product product = purchase.getProduct();
+        Long previousQty = purchase.getPurchaseQuantity();
+
+        product.setInventoryReceived(product.getInventoryReceived() - previousQty + purchaseQty);
+        productRepository.save(product);
+
         purchase.setSupplierId(supplierId);
+        purchase.setPurchaseDate(purchaseDate);
         purchase.setPurchaseQuantity(purchaseQty);
+        purchase.setModifiedDate(product.getCreatedDate());
+        purchase.setModifiedBy(config.getCurrentUser());
 
         return purchaseRepository.save(purchase).getId();
 
@@ -71,6 +81,20 @@ public class PurchaseServiceImpl implements PurchaseService {
 
     @Override
     public void deletePurchase(final Long id) {
+
+        Purchase purchase = purchaseRepository.findById(id).get();
+        Product product = purchase.getProduct();
+
+
+        product.setInventoryReceived(product.getInventoryReceived() - purchase.getPurchaseQuantity());
+        productRepository.save(product);
+
+        purchase.setDeletedFlag("Y");
+        purchase.setModifiedDate(product.getCreatedDate());
+        purchase.setModifiedBy(config.getCurrentUser());
+
+        purchaseRepository.save(purchase).getId();
+
 
     }
 

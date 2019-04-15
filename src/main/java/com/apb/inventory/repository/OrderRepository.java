@@ -13,7 +13,7 @@ import com.apb.inventory.model.Order;
 @Repository("inventoryOrderRepository")
 public interface OrderRepository extends JpaRepository<Order, Long> {
 
-    @Query( "SELECT pur FROM Order ord " +
+    @Query( "SELECT ord FROM Order ord " +
             "WHERE  ord.deletedFlag = 'N' " +
             "AND   (ord.orderDate = :orderDate OR :orderDate IS NULL) " +
             "ORDER BY ord.orderDate ")
