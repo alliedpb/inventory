@@ -80,8 +80,8 @@ CREATE TABLE sa.purchase_tbl(
     PRIMARY KEY (ID));
 
 CREATE UNIQUE INDEX id ON sa.purchase_tbl (id);
-CREATE UNIQUE INDEX supplier_id ON sa.purchase_tbl(supplier_id);
-CREATE UNIQUE INDEX product_id ON sa.purchase_tbl(product_id);
+CREATE INDEX supplier_id ON sa.purchase_tbl(supplier_id);
+CREATE INDEX product_id ON sa.purchase_tbl(product_id);
 CREATE UNIQUE INDEX purchase_date ON sa.purchase_tbl(purchase_date);
 
 

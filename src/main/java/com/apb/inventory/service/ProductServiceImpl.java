@@ -65,6 +65,9 @@ public class ProductServiceImpl implements ProductService {
         product.setCategoryId(categoryId);
         product.setMinInventory(minInventory);
         product.setInventoryOnHand(startingInventory);
+        product.setModifiedDate(LocalDateTime.now());
+        product.setModifiedBy(config.getCurrentUser());
+
 
         productRepository.save(product);
         return product.getId();
@@ -75,6 +78,9 @@ public class ProductServiceImpl implements ProductService {
     public void deleteProduct(Long id) {
         Product product = productRepository.getOne(id);
         product.setDeletedFlag("Y");
+        product.setModifiedDate(LocalDateTime.now());
+        product.setModifiedBy(config.getCurrentUser());
+
 
         productRepository.save(product);
     }

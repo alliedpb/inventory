@@ -80,7 +80,7 @@ public class Purchase implements Serializable {
     }
 
     @ManyToOne
-    @JoinColumn(name="productid", referencedColumnName = "id",insertable = false, updatable = false)
+    @JoinColumn(name="product_id", referencedColumnName = "id",insertable = false, updatable = false)
     @JsonIgnore
     public Product getProduct() { return this.product; }
 
@@ -88,8 +88,18 @@ public class Purchase implements Serializable {
         this.product = product;
     }
 
+    @Transient
+    public String getProductNumber() {
+        return this.product != null ? this.product.getProductNumber() : null;
+    }
+
+    @Transient
+    public String getProductName() {
+        return this.product != null ? this.product.getProductName() : null;
+    }
+
     @ManyToOne
-    @JoinColumn(name="supplierid", referencedColumnName = "id",insertable = false, updatable = false)
+    @JoinColumn(name="supplier_id", referencedColumnName = "id",insertable = false, updatable = false)
     @JsonIgnore
     public Supplier getSupplier() {
         return supplier;
@@ -99,7 +109,12 @@ public class Purchase implements Serializable {
         this.supplier = supplier;
     }
 
-    @Column(name="deletedflag")
+    @Transient
+    public String getSupplierName() {
+        return this.supplier != null ? this.supplier.getSupplierName() : null;
+    }
+
+    @Column(name="deleted_flag")
     public String getDeletedFlag() {
         return deletedFlag;
     }
@@ -108,7 +123,7 @@ public class Purchase implements Serializable {
         this.deletedFlag = deletedFlag;
     }
 
-    @Column(name="createddate")
+    @Column(name="created_datetime")
     public LocalDateTime getCreatedDate() {
         return createdDate;
     }
@@ -117,7 +132,7 @@ public class Purchase implements Serializable {
         this.createdDate = createdDate;
     }
 
-    @Column(name="modifieddate")
+    @Column(name="modified_datetime")
     public LocalDateTime getModifiedDate() {
         return modifiedDate;
     }
@@ -126,7 +141,7 @@ public class Purchase implements Serializable {
         this.modifiedDate = modifiedDate;
     }
 
-    @Column(name="modifiedby")
+    @Column(name="modified_by")
     public String getModifiedBy() {
         return modifiedBy;
     }

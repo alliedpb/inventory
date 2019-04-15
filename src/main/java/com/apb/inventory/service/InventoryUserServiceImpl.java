@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service("inventoryUserService")
@@ -26,7 +27,7 @@ public class InventoryUserServiceImpl implements InventoryUserService {
         user.setUsername(username);
         user.setPassword(config.passwordEncoder().encode(password));
         user.setDeletedFlag("N");
-        user.setCreatedDate(LocalDate.now());
+        user.setCreatedDate(LocalDateTime.now());
         user.setModifiedDate(user.getCreatedDate());
         user.setModifiedBy(config.getCurrentUser());
 
@@ -42,7 +43,7 @@ public class InventoryUserServiceImpl implements InventoryUserService {
         user.setUsername(username);
         user.setPassword(config.passwordEncoder().encode(password));
         user.setModifiedBy(config.getCurrentUser());
-        user.setModifiedDate(LocalDate.now());
+        user.setModifiedDate(LocalDateTime.now());
         return userRepository.save(user).getId();
 
     }
@@ -53,7 +54,7 @@ public class InventoryUserServiceImpl implements InventoryUserService {
         InventoryUser user = userRepository.findById(id).get();
         user.setDeletedFlag("Y");
         user.setModifiedBy(config.getCurrentUser());
-        user.setModifiedDate(LocalDate.now());
+        user.setModifiedDate(LocalDateTime.now());
 
 
     }

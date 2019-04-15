@@ -39,7 +39,7 @@ public class CategoryServiceImpl implements CategoryService {
         Category category = categoryRepository.findById(id).get();
 
         category.setCategoryName(categoryName);
-        category.setModifiedDate(category.getCreatedDate());
+        category.setModifiedDate(LocalDateTime.now());
         category.setModifiedBy(config.getCurrentUser());
 
         categoryRepository.save(category);
@@ -53,7 +53,7 @@ public class CategoryServiceImpl implements CategoryService {
         Category category = categoryRepository.findById(id).get();
 
         category.setDeletedFlag("Y");
-        category.setModifiedDate(category.getCreatedDate());
+        category.setModifiedDate(LocalDateTime.now());
         category.setModifiedBy(config.getCurrentUser());
 
         categoryRepository.save(category);
