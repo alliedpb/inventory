@@ -69,7 +69,7 @@ public class OrderServiceImpl implements OrderService {
 		//Calculate & update inventory on-hand.
 		Product product = productRepository.findById(productId).get();
 		product.setInventorySold(product.getInventorySold() + orderQtyDiff );
-		product.setInventoryOnHand( product.getInventoryOnHand() - orderQtyDiff );
+		product.setInventoryOnHand( product.getInventoryOnHand() + orderQtyDiff );
 		productRepository.save(product);		
 		
 		return orderRepository.save(orderFromDB).getId();
@@ -84,7 +84,7 @@ public class OrderServiceImpl implements OrderService {
 		//Calculate & update inventory on-hand.
 		Product product = productRepository.findById(order.getProductId()).get();
 		product.setInventorySold(product.getInventorySold() - order.getOrderQty() );
-		product.setInventoryOnHand( product.getInventoryOnHand() - order.getOrderQty() );
+		product.setInventoryOnHand( product.getInventoryOnHand() + order.getOrderQty() );
 		productRepository.save(product);
 	}
 
