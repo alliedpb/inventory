@@ -18,18 +18,18 @@ public class ProductController {
     @Autowired
     private ProductRepository productRepository;
 
-    @RequestMapping("/product/{id}")
+    @RequestMapping(value = "/product/{id}", produces = "application/json")
     public Product getProductById(@PathVariable("id") final Long productId) {
         return productRepository.findById(productId).get();
     }
 
-    @RequestMapping("/product/all")
+    @RequestMapping(value = "/product/all", produces = "application/json")
     public List<Product> getAllProducts() {
         return productService.getAllProducts();
     }
 
 
-    @RequestMapping("/product/add/{productNumber}/{productName}/{productDesc}/{categoryId}/{minInventory}/{startingInventory}")
+    @RequestMapping(value = "/product/add/{productNumber}/{productName}/{productDesc}/{categoryId}/{minInventory}/{startingInventory}", produces = "application/json")
     public Long addProduct(@PathVariable final String productNumber,
                                  @PathVariable final String productName,
                                  @PathVariable final String productDesc,
@@ -42,7 +42,7 @@ public class ProductController {
     }
 
 
-    @RequestMapping("/product/edit/{id}/{productNumber}/{productName}/{productDesc}/{categoryId}/{minimumRequired}/{startingInventory}")
+    @RequestMapping(value = "/product/edit/{id}/{productNumber}/{productName}/{productDesc}/{categoryId}/{minimumRequired}/{startingInventory}", produces = "application/json")
     public Long editProduct(@PathVariable final Long id,
                             @PathVariable final String productNumber,
                             @PathVariable final String productName,
@@ -55,7 +55,7 @@ public class ProductController {
 
     }
 
-    @RequestMapping("/product/delete/{id}")
+    @RequestMapping(value = "/product/delete/{id}", produces = "application/json")
     public void deleteProduct(@PathVariable("id") Long productId) {
         productService.deleteProduct(productId);
     }

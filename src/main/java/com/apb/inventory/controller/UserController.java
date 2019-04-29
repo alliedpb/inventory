@@ -14,17 +14,17 @@ public class UserController {
     @Autowired
     private InventoryUserService userService;
 
-    @RequestMapping("/user/add/{username}/{password}")
+    @RequestMapping(value = "/user/add/{username}/{password}", produces = "application/json")
     public Long addUser (@PathVariable("username") String username, @PathVariable("password") String password) {
         return userService.addUser(username, password);
     }
 
-    @RequestMapping("/user/edit/{id}/{username}/{password}")
+    @RequestMapping(value = "/user/edit/{id}/{username}/{password}", produces = "application/json")
     public Long editUser (@PathVariable("id") Long id, @PathVariable("username") String username, @PathVariable("password") String password) {
         return userService.editUser(id, username, password);
     }
 
-    @RequestMapping("/user/delete/{id}")
+    @RequestMapping(value = "/user/delete/{id}", produces = "application/json")
     public void deleteUser (@PathVariable("id") Long id) {
         userService.deleteUser(id);
     }

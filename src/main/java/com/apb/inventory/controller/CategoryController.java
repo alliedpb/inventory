@@ -21,22 +21,22 @@ public class CategoryController {
     @Autowired
     private CategoryRepository categoryRepository;
 
-    @RequestMapping("/category/all")
+    @RequestMapping(value = "/category/all", produces = "application/json")
     public List<Category> getAllCategories() {
         return categoryService.getAllCategories();
     }
 
-    @RequestMapping("category/add/{categoryName}")
+    @RequestMapping(value = "category/add/{categoryName}", produces = "application/json")
     public Long addCategory(@PathVariable String categoryName) {
         return categoryService.addCategory(categoryName);
     }
 
-    @RequestMapping("category/edit/{id}/{categoryName}")
+    @RequestMapping(value = "category/edit/{id}/{categoryName}", produces = "application/json")
     public Long editCategory(@PathVariable final Long id,@PathVariable final String categoryName) {
         return categoryService.editCategory(id, categoryName);
     }
 
-    @RequestMapping("/category/{categoryId}")
+    @RequestMapping(value = "/category/{categoryId}", produces = "application/json")
     public Category getCategory(@PathVariable final Long categoryId) {
         return categoryRepository.findById(categoryId).get();
     }

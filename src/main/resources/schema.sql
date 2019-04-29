@@ -82,15 +82,15 @@ CREATE TABLE sa.purchase_tbl(
 CREATE UNIQUE INDEX id ON sa.purchase_tbl (id);
 CREATE INDEX supplier_id ON sa.purchase_tbl(supplier_id);
 CREATE INDEX product_id ON sa.purchase_tbl(product_id);
-CREATE UNIQUE INDEX purchase_date ON sa.purchase_tbl(purchase_date);
+CREATE INDEX purchase_date ON sa.purchase_tbl(purchase_date);
 
 
 
-CREATE TABLE order_tbl(
+CREATE TABLE sa.order_tbl(
     id INT NOT NULL GENERATED ALWAYS AS IDENTITY,
     order_date TimeStamp,
     customer_name VARCHAR(60),
-    product_id INT
+    product_id INT,
     order_qty INT,
     deleted_flag varchar(1),
     created_datetime TimeStamp,
@@ -99,6 +99,6 @@ CREATE TABLE order_tbl(
     PRIMARY KEY (ID));
 
 CREATE UNIQUE INDEX id ON sa.order_tbl (id);
-CREATE UNIQUE INDEX product_id ON sa.order_tbl(product_id);
-CREATE UNIQUE INDEX order_date ON sa.order_tbl(order_date);
+CREATE INDEX product_id ON sa.order_tbl(product_id);
+CREATE INDEX order_date ON sa.order_tbl(order_date);
 
